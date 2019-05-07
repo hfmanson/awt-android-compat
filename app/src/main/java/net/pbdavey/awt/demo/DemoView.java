@@ -3,18 +3,18 @@ package net.pbdavey.awt.demo;
 
 import net.pbdavey.awt.AwtView;
 import net.pbdavey.awt.Font;
-import net.pbdavey.awt.FontMetrics;
+import java.awt.FontMetrics;
 import net.pbdavey.awt.Graphics2D;
 import net.pbdavey.awt.RenderingHints;
-import and.awt.BasicStroke;
-import and.awt.Color;
-import and.awt.Dimension;
-import and.awt.geom.Arc2D;
-import and.awt.geom.Ellipse2D;
-import and.awt.geom.GeneralPath;
-import and.awt.geom.Line2D;
-import and.awt.geom.Rectangle2D;
-import and.awt.geom.RoundRectangle2D;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import android.content.Context;
 import android.util.AttributeSet;
 

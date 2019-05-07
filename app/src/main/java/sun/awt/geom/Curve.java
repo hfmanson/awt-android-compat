@@ -27,11 +27,11 @@ package sun.awt.geom;
 
 import java.util.Vector;
 
-import and.awt.geom.CubicCurve2D;
-import and.awt.geom.IllegalPathStateException;
-import and.awt.geom.PathIterator;
-import and.awt.geom.QuadCurve2D;
-import and.awt.geom.Rectangle2D;
+import java.awt.geom.CubicCurve2D;
+import java.awt.geom.IllegalPathStateException;
+import java.awt.geom.PathIterator;
+import java.awt.geom.QuadCurve2D;
+import java.awt.geom.Rectangle2D;
 
 public abstract class Curve {
     public static final int INCREASING = 1;

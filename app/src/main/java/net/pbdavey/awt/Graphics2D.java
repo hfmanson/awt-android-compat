@@ -1,15 +1,19 @@
 package net.pbdavey.awt;
 
 
-import and.awt.Rectangle;
+import java.awt.FontMetrics;
+import java.awt.Image;
+import java.awt.Rectangle;
 import net.pbdavey.awt.RenderingHints.Key;
-import and.awt.Graphics;
-import and.awt.BasicStroke;
-import and.awt.Color;
-import and.awt.Shape;
-import and.awt.Stroke;
-import and.awt.geom.AffineTransform;
-import and.awt.geom.PathIterator;
+import java.awt.Graphics;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.PathIterator;
+import java.awt.image.ImageObserver;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -27,7 +31,7 @@ public class Graphics2D extends Graphics {
 	Canvas canvas;
 	
 	Font font = new Font();
-	and.awt.Paint awtPaint;
+	java.awt.Paint awtPaint;
 	Stroke stroke;
 
 	Color color = Color.white;
@@ -38,13 +42,14 @@ public class Graphics2D extends Graphics {
 		this.canvas = canvas;
 		this.transform = new AffineTransform();
 		this.paint = new Paint();
+		this.paint.setTextSize(30);
 	}
 	
-	public void setPaint(and.awt.Paint p) {
+	public void setPaint(java.awt.Paint p) {
 		this.awtPaint = p;
 	}
 	
-	public and.awt.Paint getPaint() {
+	public java.awt.Paint getPaint() {
 		return awtPaint;
 	}
 
@@ -69,7 +74,7 @@ public class Graphics2D extends Graphics {
 	 * TODO: This shouldn't accept BasicStroke, rather a generic Stroke
 	 * The issue here has to do with actually stroking the Shape, which
 	 * is delegated to a rendering pipe.  See
-	 * {@link and.awt.BasicStroke#createStrokedShape}
+	 * {@link java.awt.BasicStroke#createStrokedShape}
 	 * @param stroke
 	 */
 	public void setStroke(Stroke pStroke) {
@@ -113,7 +118,7 @@ public class Graphics2D extends Graphics {
 	}
 
     public void fill3DRect(int x, int y, int width, int height, boolean raised) {
-		and.awt.Paint p = getPaint();
+		java.awt.Paint p = getPaint();
 		Color c = getColor();
 		Color brighter = c.brighter();
 		Color darker = c.darker();
@@ -138,7 +143,7 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void draw3DRect(int x, int y, int width, int height, boolean raised) {
-		and.awt.Paint p = getPaint();
+		java.awt.Paint p = getPaint();
 		Color c = getColor();
 		Color brighter = c.brighter();
 		Color darker = c.darker();
@@ -320,6 +325,13 @@ public class Graphics2D extends Graphics {
 	}
 
 	@Override
+	public boolean drawImage(Image img, int x, int y, ImageObserver observer) {
+		ImageImpl impl = (ImageImpl) img;
+		canvas.drawBitmap(impl.getAndroidBitmap(), x, y, paint);
+		return true;
+	}
+
+	@Override
 	public void drawArc(int x, int y, int width, int height, int startAngle,
 			int arcAngle) {
 		paint.setStyle(Style.STROKE);
@@ -341,7 +353,7 @@ public class Graphics2D extends Graphics {
 	@Override
 	public void drawPolygon(int[] pointsX, int[] pointsY, int nPoints) {
 		paint.setStyle(Style.STROKE);
-		for (int i = 0; i < nPoints; i++) {
+		for (int i = 0; i < nPoints-1; i++) {
 			drawLine(pointsX[i],pointsY[i],pointsX[i+1],pointsY[i+1]);
 		}
 		drawLine(pointsX[0],pointsY[0],pointsX[nPoints-1],pointsY[nPoints-1]);
@@ -350,7 +362,7 @@ public class Graphics2D extends Graphics {
 	@Override
 	public void drawPolyline(int[] pointsX, int[] pointsY, int nPoints) {
 		paint.setStyle(Style.STROKE);
-		for (int i = 0; i < nPoints; i++) {
+		for (int i = 0; i < nPoints-1; i++) {
 			drawLine(pointsX[i],pointsY[i],pointsX[i+1],pointsY[i+1]);
 		}
 	}
@@ -376,9 +388,17 @@ public class Graphics2D extends Graphics {
 	}
 
 	@Override
-	public void fillPolygon(int[] points, int[] points2, int points3) {
-		// TODO Auto-generated method stub
-		// maybe create a Path-based Poly?
+	public void fillPolygon(int[] pointsX, int[] pointsY, int nPoints) {
+		paint.setStyle(Style.FILL);
+
+		Path path = new Path();
+		path.reset();
+		path.moveTo(pointsX[0], pointsY[0]);
+		for (int i = 0; i < nPoints; i++) {
+			path.lineTo(pointsX[i], pointsY[i]);
+		}
+		path.moveTo(pointsX[0], pointsY[0]);
+		canvas.drawPath(path, paint);
 	}
 
 	@Override

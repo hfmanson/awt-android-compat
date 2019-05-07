@@ -28,7 +28,7 @@ package sun.awt.geom;
 import java.util.Vector;
 import java.util.Enumeration;
 
-import and.awt.geom.PathIterator;
+import java.awt.geom.PathIterator;
 
 public abstract class Crossings {
     public static final boolean debug = false;

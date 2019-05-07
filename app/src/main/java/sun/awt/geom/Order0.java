@@ -27,8 +27,8 @@ package sun.awt.geom;
 
 import java.util.Vector;
 
-import and.awt.geom.PathIterator;
-import and.awt.geom.Rectangle2D;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Rectangle2D;
 
 final class Order0 extends Curve {
     private double x;

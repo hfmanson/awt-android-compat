@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:grid="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/choice_grid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="2dp"
+
+    grid:columnCount="2"
+    >
+
+    <Button
+        android:text="Tile1"
+        grid:layout_rowWeight="1"
+        grid:layout_columnWeight="1"
+        />
+
+    <Button
+        android:text="Tile2"
+        grid:layout_rowWeight="1"
+        grid:layout_columnWeight="1"
+        />
+
+    <Button
+        grid:layout_rowWeight="1"
+        grid:layout_columnWeight="1"
+        android:text="Tile3" />
+
+    <Button
+        grid:layout_rowWeight="1"
+        grid:layout_columnWeight="1"
+        android:text="Tile4" />
+
+</android.support.v7.widget.GridLayout>
