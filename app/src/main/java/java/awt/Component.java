@@ -2,6 +2,7 @@ package java.awt;
 
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -17,6 +18,14 @@ import java.util.Set;
 
 public class Component implements ImageObserver {
     private static final String TAG = Component.class.getSimpleName();
+
+    View componentView;
+    Container parent;
+
+    public Component() {
+        componentView = new ComponentView(this);
+        componentView.setFocusable(true);
+    }
 
     @Override
     public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
@@ -44,6 +53,29 @@ public class Component implements ImageObserver {
             super.onDraw(canvas);
             Graphics2D g2 = new Graphics2D(canvas);
             component.paint(g2);
+        }
+
+        private boolean processKeyDown(Component component, Event event, int keyCode) {
+            boolean processed = false;
+            while (component != null && !(processed = component.keyDown(event, keyCode))) {
+                component = component.parent;
+            }
+            return processed;
+        }
+
+        @Override
+        public boolean onKeyDown(int keyCode, KeyEvent event) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_DPAD_LEFT:
+                    return processKeyDown(component, null, Event.LEFT);
+                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                    return processKeyDown(component, null, Event.RIGHT);
+                case KeyEvent.KEYCODE_DPAD_UP:
+                    return processKeyDown(component, null, Event.UP);
+                case KeyEvent.KEYCODE_DPAD_DOWN:
+                    return processKeyDown(component, null, Event.DOWN);
+            }
+            return super.onKeyDown(keyCode, event);
         }
 
         @Override
@@ -80,12 +112,6 @@ public class Component implements ImageObserver {
         }
 
     }
-    protected ComponentView componentView;
-
-
-    public Component() {
-        componentView = new ComponentView(this);
-    }
 
     public void repaint() {
         componentView.invalidate();
@@ -105,11 +131,15 @@ public class Component implements ImageObserver {
     }
 
     public void addMouseListener(MouseListener l) {
-        componentView.addMouseListener(l);
+        if (componentView instanceof ComponentView) {
+            ((ComponentView) componentView).addMouseListener(l);
+        }
     }
 
     public void removeMouseListener(MouseListener l) {
-        componentView.removeMouseListener(l);
+        if (componentView instanceof ComponentView) {
+            ((ComponentView) componentView).removeMouseListener(l);
+        }
     }
 
     public Image createImage(int width,
@@ -143,6 +173,48 @@ public class Component implements ImageObserver {
     public void setForeground(Color c) {
         //TODO setForeground(Color c)
     }
+
+    @Deprecated
+    public void resize(Dimension d) {
+        //TODO resize(Dimension d)
+    }
+
+    @Deprecated
+    public void resize(int width, int height) {
+        //TODO resize(int width, int height)
+
+    }
+
+    @Deprecated
+    public void show() {
+        //TODO show()
+    }
+
+
+    @Deprecated
+    public Dimension size() {
+        return new Dimension(componentView.getWidth(), componentView.getHeight());
+    }
+
+    public void requestFocus() {
+        //TODO requestFocus()
+    }
+
+
+    @Deprecated
+    public boolean keyDown(Event evt, int key) {
+        return false;
+    }
+
+    @Deprecated
+    boolean	action(Event evt, Object what) {
+        return false;
+    }
+
+    public Container getParent() {
+        return parent;
+    }
+
     // Android specific
     public View getAndroidView() {
         return componentView;

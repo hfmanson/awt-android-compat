@@ -35,7 +35,7 @@ public class BorderLayout implements LayoutManager2, Serializable {
      */
     public static final String CENTER = "Center";
 
-    ViewGroup borderLayoutViewGroup;
+    Container parent;
 
     public BorderLayout() {
     }
@@ -85,6 +85,7 @@ public class BorderLayout implements LayoutManager2, Serializable {
                 break;
         }
         if (index != -1) {
+            ViewGroup borderLayoutViewGroup = (ViewGroup) parent.componentView;
             View oldView = borderLayoutViewGroup.getChildAt(index);
             ViewGroup.LayoutParams params = oldView.getLayoutParams();
             int oldId = oldView.getId();
@@ -92,6 +93,7 @@ public class BorderLayout implements LayoutManager2, Serializable {
             View view = comp.getAndroidView();
             view.setLayoutParams(params);
             view.setId(oldId);
+            comp.parent = parent;
             borderLayoutViewGroup.addView(view, index);
         }
 
@@ -118,7 +120,7 @@ public class BorderLayout implements LayoutManager2, Serializable {
     }
     @Override
     public void layoutContainer(Container parent) {
-        borderLayoutViewGroup = (ViewGroup) View.inflate(DemoApp.getContext(),R.layout.borderlayout, parent.viewGroup);
-        parent.viewGroup = borderLayoutViewGroup;
+        this.parent = parent;
+        parent.componentView = View.inflate(DemoApp.getContext(),R.layout.borderlayout, (ViewGroup) parent.componentView);
     }
 }

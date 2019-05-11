@@ -5,11 +5,9 @@ import android.view.ViewGroup;
 
 public class Container extends Component {
     LayoutManager layoutMgr;
-    protected ViewGroup viewGroup;
 
     public Container() {
-        super();
-        viewGroup = null;
+        componentView = null;
     }
 
     /**
@@ -212,7 +210,10 @@ public class Container extends Component {
      */
     protected void addImpl(Component comp, Object constraints, int index) {
         if (layoutMgr == null) {
-            viewGroup.addView(comp.getAndroidView());
+            comp.parent = this;
+            if (componentView instanceof ViewGroup) {
+                ((ViewGroup) componentView).addView(comp.getAndroidView());
+            }
         } else {
             /* Notify the layout manager of the added component. */
             if (layoutMgr != null) {
@@ -237,7 +238,7 @@ public class Container extends Component {
 
     @Override
     public View getAndroidView() {
-        return viewGroup;
+        return componentView;
     }
 
 }

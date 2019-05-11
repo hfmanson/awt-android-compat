@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 public class GridLayout implements LayoutManager2, Serializable {
     private android.support.v7.widget.GridLayout gridLayout;
+    Container parent;
 
     public GridLayout(int rows, int cols) {
         gridLayout = new android.support.v7.widget.GridLayout(DemoApp.getContext());
@@ -44,6 +45,7 @@ public class GridLayout implements LayoutManager2, Serializable {
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         params.width  = ViewGroup.LayoutParams.WRAP_CONTENT;
         child.setLayoutParams(params);
+        comp.parent = parent;
         gridLayout.addView(child);
     }
 
@@ -87,6 +89,7 @@ public class GridLayout implements LayoutManager2, Serializable {
 
     @Override
     public void layoutContainer(Container parent) {
-        parent.viewGroup = gridLayout;
+        this.parent = parent;
+        parent.componentView = gridLayout;
     }
 }
