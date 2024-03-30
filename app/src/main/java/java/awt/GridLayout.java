@@ -1,6 +1,5 @@
 package java.awt;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,11 +8,11 @@ import net.pbdavey.awt.demo.DemoApp;
 import java.io.Serializable;
 
 public class GridLayout implements LayoutManager2, Serializable {
-    private android.support.v7.widget.GridLayout gridLayout;
+    private androidx.gridlayout.widget.GridLayout gridLayout;
     Container parent;
 
     public GridLayout(int rows, int cols) {
-        gridLayout = new android.support.v7.widget.GridLayout(DemoApp.getContext());
+        gridLayout = new androidx.gridlayout.widget.GridLayout(DemoApp.getContext());
         ViewGroup.LayoutParams layoutParams =
                 new ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -29,15 +28,15 @@ public class GridLayout implements LayoutManager2, Serializable {
         View child = comp.getAndroidView();
 //https://stackoverflow.com/a/47971896/433626
 // weight = 1f, gravity = GridLayout.FILL
-        android.support.v7.widget.GridLayout.LayoutParams params =
-            new android.support.v7.widget.GridLayout.LayoutParams(
-                android.support.v7.widget.GridLayout.spec(
-                    android.support.v7.widget.GridLayout.UNDEFINED,
-                    android.support.v7.widget.GridLayout.FILL,
+        androidx.gridlayout.widget.GridLayout.LayoutParams params =
+            new androidx.gridlayout.widget.GridLayout.LayoutParams(
+                androidx.gridlayout.widget.GridLayout.spec(
+                    androidx.gridlayout.widget.GridLayout.UNDEFINED,
+                    androidx.gridlayout.widget.GridLayout.FILL,
                     1f),
-                android.support.v7.widget.GridLayout.spec(
-                    android.support.v7.widget.GridLayout.UNDEFINED,
-                    android.support.v7.widget.GridLayout.FILL,
+                androidx.gridlayout.widget.GridLayout.spec(
+                    androidx.gridlayout.widget.GridLayout.UNDEFINED,
+                    androidx.gridlayout.widget.GridLayout.FILL,
                     1f)
                 );
 

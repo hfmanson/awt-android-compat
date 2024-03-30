@@ -10,14 +10,12 @@ import net.pbdavey.awt.demo.DemoApp;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Button extends Component {
     private static final String TAG = Button.class.getSimpleName();
-    private static class ButtonView extends android.support.v7.widget.AppCompatButton {
+    private static class ButtonView extends androidx.appcompat.widget.AppCompatButton {
         private Set<ActionListener> actionListenerSet;
         private Button button;
 
@@ -40,18 +38,28 @@ public class Button extends Component {
             button.paint(g2);
         }
 
+        boolean processAction(Component component, Event event, Object what) {
+            boolean processed = false;
+            while (component != null && !(processed = component.action(event, what))) {
+                component = component.parent;
+            }
+            return processed;
+        }
+
         @Override
         public boolean onTouchEvent(MotionEvent event) {
             int x = (int) event.getX();
             int y = (int) event.getY();
-
+            String text = getText().toString();
             Log.d(TAG, "onTouchEvent: " + event);
-            Log.d(TAG, "button text: " + getText());
+            Log.d(TAG, "button text: " + text);
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     for (ActionListener actionListener : actionListenerSet) {
-                        actionListener.actionPerformed(new ActionEvent(button, 0, getText().toString()));
+                        actionListener.actionPerformed(new ActionEvent(button, 0, text));
                     }
+                    Event evt = new Event(button, 0, text);
+                    processAction(button, evt, text);
                     break;
                 case MotionEvent.ACTION_MOVE:
                     //pointerDragged(x, y);

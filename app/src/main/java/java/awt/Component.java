@@ -45,6 +45,7 @@ public class Component implements ImageObserver {
         @Override
         protected void onSizeChanged(int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
+            Log.d(TAG, "onSizeChanged, w: " + w + ", h: " + h);
             invalidate();
         }
 
@@ -53,6 +54,9 @@ public class Component implements ImageObserver {
             super.onDraw(canvas);
             Graphics2D g2 = new Graphics2D(canvas);
             component.paint(g2);
+//            android.graphics.Paint paint = new android.graphics.Paint();
+//            paint.setColor(android.graphics.Color.RED);
+//            canvas.drawLine(0, 0, x, y, paint);
         }
 
         private boolean processKeyDown(Component component, Event event, int keyCode) {
@@ -117,8 +121,23 @@ public class Component implements ImageObserver {
         componentView.invalidate();
     }
 
+    public int getWidth() {
+        int width = componentView.getWidth();
+        Log.d(TAG, "getSize, width: " + width);
+        return width;
+    }
+
+    public int getHeight() {
+        int height = componentView.getHeight();
+        Log.d(TAG, "getSize, height: " + height);
+        return height;
+    }
+
     public Dimension getSize() {
-        return new Dimension(componentView.getWidth(), componentView.getHeight());
+        int width = componentView.getWidth();
+        int height = componentView.getHeight();
+        Log.d(TAG, "getSize, width: " + width + ", height: " + height);
+        return new Dimension(width, height);
     }
 
     public void paint(Graphics g) {

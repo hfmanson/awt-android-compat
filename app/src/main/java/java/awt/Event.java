@@ -548,5 +548,9 @@ public class Event implements java.io.Serializable {
      */
     public Event evt;
 
-
+    public Event(Object target, int id, Object arg) {
+        this.target = target;
+        this.id = id;
+        this.arg = arg;
+    }
 }

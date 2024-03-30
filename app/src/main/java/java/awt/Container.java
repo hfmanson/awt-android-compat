@@ -7,7 +7,6 @@ public class Container extends Component {
     LayoutManager layoutMgr;
 
     public Container() {
-        componentView = null;
     }
 
     /**

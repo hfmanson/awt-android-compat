@@ -101,6 +101,33 @@ public class Demo extends Activity {
         return getAppletView(appletClassName, null);
     }
 
+    private View getKronkelView() {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("lx", "-0.5");
+        parameters.put("by", "-0.5");
+        parameters.put("ty", "1.5");
+        parameters.put("rx", "1.5");
+
+        parameters.put("n", "12");
+        parameters.put("mx1", "0.5");
+        parameters.put("my1", "0.5");
+        parameters.put("mx2", "1.0");
+        parameters.put("my2", "0.0");
+
+        parameters.put("bx1", "0.0");
+        parameters.put("by1", "0.0");
+        parameters.put("bx2", "1.0");
+        parameters.put("by2", "0.0");
+        parameters.put("bx3", "1.0");
+        parameters.put("by3", "1.0");
+        parameters.put("bx4", "0.0");
+        parameters.put("by4", "1.0");
+        parameters.put("bx5", "0.0");
+        parameters.put("by5", "0.0");
+        String appletClassName = "Kronkel";
+        return getAppletView(appletClassName, parameters);
+    }
+
     private View getAwtTestView() {
         ButtonGrid buttonGrid = new ButtonGrid();
         buttonGrid.init();
@@ -118,6 +145,7 @@ public class Demo extends Activity {
         //View appletView = getPlanks3PuzzlesView();
         //View appletView = getPlanksHexView();
         View appletView = getNoLeftTurnView();
+        //View appletView = getKronkelView();
         //View appletView = getOMazeView();
         setContentView(appletView);
     }

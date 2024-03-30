@@ -1,6 +1,5 @@
 package java.awt;
 
-import android.support.v7.widget.GridLayout;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -121,6 +120,7 @@ public class BorderLayout implements LayoutManager2, Serializable {
     @Override
     public void layoutContainer(Container parent) {
         this.parent = parent;
-        parent.componentView = View.inflate(DemoApp.getContext(),R.layout.borderlayout, (ViewGroup) parent.componentView);
+        View parentComponentView = parent.componentView;
+        parent.componentView = View.inflate(DemoApp.getContext(),R.layout.borderlayout, parentComponentView instanceof ViewGroup ? (ViewGroup) parentComponentView : null);
     }
 }

@@ -131,6 +131,7 @@ public class ComponentEvent extends AWTEvent {
         return (source instanceof Component) ? (Component)source : null;
     }
 
+    protected boolean consumed;
     /**
      * Returns a parameter string identifying this event.
      * This method is useful for event-logging and for debugging.
